@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -25,8 +26,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/add").access("hasAuthority('ADMIN')")
                 .anyRequest().authenticated()
                 .and() // Adds additional authentication rules. Use this to combine rules.
-                .formLogin().loginPage("/login").permitAll() //formLogin()- Indicates that the application should show a login form.
+                .formLogin().loginPage("/login").permitAll()
+                //formLogin()- Indicates that the application should show a login form.
                 // .formLogin().loginPage("/login").permitAll() - indicates that you are expecting a login form.
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").permitAll()
                 .and().httpBasic(); // User can avoid a login prompt by putting his/her login details in the
         // request. Used for testing.
     }

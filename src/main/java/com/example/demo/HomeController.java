@@ -1,5 +1,6 @@
 package com.example.demo;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,41 +15,55 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
     @Autowired
-    CourseRepository courseRepository;
+    SandwichRepository sandwichRepository;
 
     @RequestMapping("/")
     public String listCourses(Model model) {
-        model.addAttribute("courses", courseRepository.findAll());
+        model.addAttribute("sandwiches", sandwichRepository.findAll());
         return "list";
+    }
+
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @RequestMapping("/admin")
+    public String admin(){
+        return "admin";
     }
 
     @GetMapping("/add")
     public String courseForm(Model model) {
-        model.addAttribute("course", new Course());
-        return "courseform";
+        model.addAttribute("sandwich", new Sandwich());
+        return "sandwichform";
     }
 
     @PostMapping("/process")
-    public String processForm(@Valid Course course, BindingResult result) {
+    public String processForm(@Valid Sandwich sandwich, BindingResult result) {
         if (result.hasErrors()) {
-            return "courseform";
+            return "sandwichform";
         }
-        courseRepository.save(course);
+        sandwichRepository.save(sandwich);
         return "redirect:/";
     }
+
     @RequestMapping("/detail/{id}")
-    public String showCourse(@PathVariable("id") long id, Model model){
-    model.addAttribute("course",courseRepository.findById(id).get());
-    return "show";
+    public String showCourse(@PathVariable("id") long id, Model model) {
+        model.addAttribute("sandwich", sandwichRepository.findById(id).get());
+        return "show";
     }
+
     @RequestMapping("/update/{id}")
-    public String updateCourse(@PathVariable("id") long id, Model model){
-        model.addAttribute("course", courseRepository.findById(id));
-        return "courseform";
+    public String updateCourse(@PathVariable("id") long id, Model model) {
+        model.addAttribute("sandwich", sandwichRepository.findById(id));
+        return "sandwichform";
     }
+
     @RequestMapping("/delete/{id}")
-    public String delCourse(@PathVariable("id")long id){
-        courseRepository.deleteById(id);
+    public String delCourse(@PathVariable("id") long id) {
+        sandwichRepository.deleteById(id);
         return "redirect:/";
     }
 }
+

@@ -8,19 +8,19 @@
 <a href="/add"> Add a Course</a> <br/>
 <table>
     <tr>
-        <th>Title</th>
-        <th>Instructor</th>
-        <th>Credits</th>
-        <th>Actions</th>
+        <th>Name</th>
+        <th>Oder</th>
+        <th>Description</th>
+
     </tr>
-    <tr th:each="course : ${courses}">
-        <td th:text="${course.title}"></td>
-        <td th:text="${course.instructor}"></td>
-        <td th:text="${course.credit}"></td>
+    <tr th:each="course : ${sandwiches}">
+        <td th:text="${sandwich.name}"></td>
+        <td th:text="${sandwich.orderName}"></td>
+        <td th:text="${sandwich.description}"></td>
         <td>
-        <a th:href="@{/update/{id}(id=${course.id})}">Update</a> -
-            <a th:href="@{/detail/{id}(id=${course.id})}">Details</a>
-            <a th:href="@{/delete/{id}(id=${course.id})}">Delete</a>
+            <a th:href="@{/update/{id}(id=${sandwich.id})}">Update</a> -
+            <a th:href="@{/detail/{id}(id=${sandwich.id})}">Details</a>
+            <a th:href="@{/delete/{id}(id=${sandwich.id})}">Delete</a>
         </td>
     </tr>
 </table>
